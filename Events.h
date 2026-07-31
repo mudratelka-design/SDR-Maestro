@@ -1,6 +1,6 @@
 //=============================================================================
 // File: Events.h
-// Commit: 2
+// Commit: 6
 //=============================================================================
 
 #ifndef EVENTS_H
@@ -16,12 +16,15 @@ enum class EventType : uint8_t
     EncoderCounterClockwise,
 
     ButtonPressed,
-    ButtonReleased
+    ButtonReleased,
+
+    ButtonLongPressed
 };
 
 struct Event
 {
     EventType type = EventType::None;
+    uint8_t encoder = 0;
     int32_t value = 0;
 };
 

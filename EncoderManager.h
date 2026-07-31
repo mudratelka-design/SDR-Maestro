@@ -1,10 +1,12 @@
 //=============================================================================
 // File: EncoderManager.h
-// Commit: 2
+// Commit: 6
 //=============================================================================
 
 #ifndef ENCODER_MANAGER_H
 #define ENCODER_MANAGER_H
+
+#include <Arduino.h>
 
 class EncoderManager
 {
@@ -13,7 +15,7 @@ public:
     void update();
 
 private:
-    int lastState = 0;
+    int lastStateA[ENCODER_COUNT];
 };
 
 #endif

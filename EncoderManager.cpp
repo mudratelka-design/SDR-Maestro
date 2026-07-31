@@ -1,51 +1,51 @@
 //=============================================================================
 // File: EncoderManager.cpp
-// Commit: 2
+// Commit: 6
 //=============================================================================
 
-#include <Arduino.h>
-
 #include "EncoderManager.h"
+
+#include "Config.h"
 #include "Queue.h"
 #include "Events.h"
 
-#ifndef ENCODER_PIN_A
-#define ENCODER_PIN_A 1
-#endif
-
-#ifndef ENCODER_PIN_B
-#define ENCODER_PIN_B 2
-#endif
-
 void EncoderManager::begin()
 {
-    pinMode(ENCODER_PIN_A, INPUT_PULLUP);
-    pinMode(ENCODER_PIN_B, INPUT_PULLUP);
+    for (uint8_t i = 0; i < ENCODER_COUNT; i++)
+    {
+        pinMode(ENCODERS[i].pinA, INPUT);
+        pinMode(ENCODERS[i].pinB, INPUT);
 
-    lastState = digitalRead(ENCODER_PIN_A);
+        lastStateA[i] = digitalRead(ENCODERS[i].pinA);
+    }
 }
 
 void EncoderManager::update()
 {
-    int currentState = digitalRead(ENCODER_PIN_A);
-
-    if (currentState != lastState)
+    for (uint8_t i = 0; i < ENCODER_COUNT; i++)
     {
-        Event event;
+        int stateA = digitalRead(ENCODERS[i].pinA);
 
-        if (digitalRead(ENCODER_PIN_B) != currentState)
+        if (stateA != lastStateA[i])
         {
-            event.type = EventType::EncoderClockwise;
-            event.value = 1;
-        }
-        else
-        {
-            event.type = EventType::EncoderCounterClockwise;
-            event.value = -1;
-        }
+            Event event;
 
-        EventQueue.push(event);
+            event.encoder = i;
 
-        lastState = currentState;
+            if (digitalRead(ENCODERS[i].pinB) != stateA)
+            {
+                event.type = EventType::EncoderClockwise;
+                event.value = 1;
+            }
+            else
+            {
+                event.type = EventType::EncoderCounterClockwise;
+                event.value = -1;
+            }
+
+            EventQueue.push(event);
+
+            lastStateA[i] = stateA;
+        }
     }
 }

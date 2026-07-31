@@ -1,6 +1,6 @@
 //=============================================================================
 // File: App.cpp
-// Commit: 4
+// Commit: 6
 //=============================================================================
 
 #include "App.h"
@@ -27,6 +27,12 @@ static StorageManager Storage;
 void App::begin()
 {
     LoggerInstance.begin();
+
+    LoggerInstance.info("========================================");
+    LoggerInstance.info("SDR Maestro");
+    LoggerInstance.info("Commit #6");
+    LoggerInstance.info("Hardware configuration loaded.");
+    LoggerInstance.info("========================================");
 
     Storage.begin();
     Storage.load();

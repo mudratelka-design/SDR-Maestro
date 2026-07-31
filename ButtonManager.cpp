@@ -1,44 +1,75 @@
 //=============================================================================
 // File: ButtonManager.cpp
-// Commit: 2
+// Commit: 6
 //=============================================================================
 
-#include <Arduino.h>
-
 #include "ButtonManager.h"
+
+#include "Config.h"
 #include "Queue.h"
 #include "Events.h"
 
-#ifndef BUTTON_PIN
-#define BUTTON_PIN 3
-#endif
-
 void ButtonManager::begin()
 {
-    pinMode(BUTTON_PIN, INPUT_PULLUP);
+    for (uint8_t i = 0; i < ENCODER_COUNT; i++)
+    {
+        pinMode(ENCODERS[i].pinKey, INPUT);
 
-    lastState = digitalRead(BUTTON_PIN);
+        lastState[i] = digitalRead(ENCODERS[i].pinKey);
+
+        lastChangeTime[i] = millis();
+        pressTime[i] = 0;
+
+        longPressReported[i] = false;
+    }
 }
 
 void ButtonManager::update()
 {
-    bool state = digitalRead(BUTTON_PIN);
+    const uint32_t now = millis();
 
-    if (state != lastState)
+    for (uint8_t i = 0; i < ENCODER_COUNT; i++)
     {
-        Event event;
+        bool state = digitalRead(ENCODERS[i].pinKey);
 
-        if (!state)
+        if (state != lastState[i])
         {
-            event.type = EventType::ButtonPressed;
+            if ((now - lastChangeTime[i]) >= BUTTON_DEBOUNCE_MS)
+            {
+                lastChangeTime[i] = now;
+                lastState[i] = state;
+
+                Event event;
+                event.encoder = i;
+
+                if (!state)
+                {
+                    pressTime[i] = now;
+                    longPressReported[i] = false;
+
+                    event.type = EventType::ButtonPressed;
+                }
+                else
+                {
+                    event.type = EventType::ButtonReleased;
+                }
+
+                EventQueue.push(event);
+            }
         }
-        else
+
+        if (!state &&
+            !longPressReported[i] &&
+            ((now - pressTime[i]) >= BUTTON_LONG_PRESS_MS))
         {
-            event.type = EventType::ButtonReleased;
+            longPressReported[i] = true;
+
+            Event event;
+
+            event.encoder = i;
+            event.type = EventType::ButtonLongPressed;
+
+            EventQueue.push(event);
         }
-
-        EventQueue.push(event);
-
-        lastState = state;
     }
 }
