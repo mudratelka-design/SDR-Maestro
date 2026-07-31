@@ -1,6 +1,6 @@
 //=============================================================================
 // File: StorageManager.h
-// Commit: 1
+// Commit: 3
 //=============================================================================
 
 #ifndef STORAGE_MANAGER_H
@@ -10,6 +10,9 @@ class StorageManager
 {
 public:
     void begin();
+
+    bool load();
+    bool save();
 };
 
 #endif
