@@ -1,6 +1,6 @@
 //=============================================================================
 // File: ActionManager.h
-// Commit: 3
+// Commit: 4
 //=============================================================================
 
 #ifndef ACTION_MANAGER_H
@@ -9,14 +9,20 @@
 #include "Events.h"
 #include "Types.h"
 
+class HIDManager;
+
 class ActionManager
 {
 public:
     void begin();
     void update();
 
+    void attachHID(HIDManager* hid);
+
 private:
     Action mapEventToAction(const Event& event);
+
+    HIDManager* hidManager = nullptr;
 };
 
 #endif
