@@ -1,6 +1,6 @@
 //=============================================================================
 // File: App.cpp
-// Commit: 1
+// Commit: 3
 //=============================================================================
 
 #include "App.h"
@@ -15,6 +15,7 @@
 #include "Queue.h"
 
 extern Logger LoggerInstance;
+extern Queue EventQueue;
 
 static EncoderManager Encoder;
 static ButtonManager Button;
@@ -22,18 +23,23 @@ static ActionManager Action;
 static HIDManager Hid;
 static ProfileManager Profile;
 static StorageManager Storage;
-static Queue EventQueue;
 
 void App::begin()
 {
     LoggerInstance.begin();
 
     Storage.begin();
+    Storage.load();
+
     Profile.begin();
+
     EventQueue.begin();
+
     Encoder.begin();
     Button.begin();
+
     Action.begin();
+
     Hid.begin();
 }
 
@@ -41,6 +47,8 @@ void App::update()
 {
     Encoder.update();
     Button.update();
+
     Action.update();
+
     Hid.update();
 }
