@@ -1,6 +1,6 @@
 //=============================================================================
 // File: ButtonManager.h
-// Commit: 1
+// Commit: 2
 //=============================================================================
 
 #ifndef BUTTON_MANAGER_H
@@ -11,6 +11,9 @@ class ButtonManager
 public:
     void begin();
     void update();
+
+private:
+    bool lastState = true;
 };
 
 #endif
