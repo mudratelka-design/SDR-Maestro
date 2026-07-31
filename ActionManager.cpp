@@ -1,18 +1,24 @@
 //=============================================================================
 // File: ActionManager.cpp
-// Commit: 3
+// Commit: 4
 //=============================================================================
 
 #include "ActionManager.h"
 
 #include "Queue.h"
 #include "ProfileManager.h"
+#include "HIDManager.h"
 
 static ProfileManager Profile;
 
 void ActionManager::begin()
 {
     Profile.begin();
+}
+
+void ActionManager::attachHID(HIDManager* hid)
+{
+    hidManager = hid;
 }
 
 void ActionManager::update()
@@ -28,8 +34,10 @@ void ActionManager::update()
             continue;
         }
 
-        // Commit #4:
-        // HIDManager will execute Action objects.
+        if (hidManager != nullptr)
+        {
+            hidManager->execute(action);
+        }
     }
 }
 
