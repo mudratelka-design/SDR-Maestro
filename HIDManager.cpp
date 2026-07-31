@@ -9,6 +9,7 @@
 
 static BleKeyboard BleHID(
     "SDR Maestro",
+    "Maverick + OpenAI",
     100);
 
 HIDManager HIDManagerInstance;
