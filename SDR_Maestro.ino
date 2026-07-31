@@ -1,20 +1,20 @@
 //=============================================================================
 // File: SDR_Maestro.ino
-// Commit: 6
+// Commit: 7
 //=============================================================================
 
 #include <Arduino.h>
 
 #include "App.h"
 
-static App app;
+App Application;
 
 void setup()
 {
-    app.begin();
+    Application.begin();
 }
 
 void loop()
 {
-    app.update();
+    Application.update();
 }

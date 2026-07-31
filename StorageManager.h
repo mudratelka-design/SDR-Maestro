@@ -1,6 +1,6 @@
 //=============================================================================
 // File: StorageManager.h
-// Commit: 3
+// Commit: 7
 //=============================================================================
 
 #ifndef STORAGE_MANAGER_H
@@ -14,5 +14,7 @@ public:
     bool load();
     bool save();
 };
+
+extern StorageManager StorageManagerInstance;
 
 #endif

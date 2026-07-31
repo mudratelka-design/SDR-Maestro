@@ -1,6 +1,6 @@
 //=============================================================================
 // File: ActionManager.h
-// Commit: 4
+// Commit: 7
 //=============================================================================
 
 #ifndef ACTION_MANAGER_H
@@ -24,5 +24,7 @@ private:
 
     HIDManager* hidManager = nullptr;
 };
+
+extern ActionManager ActionManagerInstance;
 
 #endif

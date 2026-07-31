@@ -1,6 +1,6 @@
 //=============================================================================
 // File: Events.h
-// Commit: 6
+// Commit: 7
 //=============================================================================
 
 #ifndef EVENTS_H
@@ -17,7 +17,6 @@ enum class EventType : uint8_t
 
     ButtonPressed,
     ButtonReleased,
-
     ButtonLongPressed
 };
 

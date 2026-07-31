@@ -1,12 +1,13 @@
 //=============================================================================
 // File: EncoderManager.h
-// Commit: 6
+// Commit: 7
 //=============================================================================
 
 #ifndef ENCODER_MANAGER_H
 #define ENCODER_MANAGER_H
 
 #include <Arduino.h>
+#include "Config.h"
 
 class EncoderManager
 {

@@ -1,6 +1,6 @@
 //=============================================================================
 // File: ActionManager.cpp
-// Commit: 4
+// Commit: 7
 //=============================================================================
 
 #include "ActionManager.h"
@@ -9,11 +9,10 @@
 #include "ProfileManager.h"
 #include "HIDManager.h"
 
-static ProfileManager Profile;
+ActionManager ActionManagerInstance;
 
 void ActionManager::begin()
 {
-    Profile.begin();
 }
 
 void ActionManager::attachHID(HIDManager* hid)
@@ -48,17 +47,26 @@ Action ActionManager::mapEventToAction(const Event& event)
     switch (event.type)
     {
         case EventType::EncoderClockwise:
-            action.type = Profile.getClockwiseAction();
+            action.type =
+                ProfileManagerInstance.getClockwiseAction(event.encoder);
             action.value = event.value;
             break;
 
         case EventType::EncoderCounterClockwise:
-            action.type = Profile.getCounterClockwiseAction();
+            action.type =
+                ProfileManagerInstance.getCounterClockwiseAction(event.encoder);
             action.value = event.value;
             break;
 
         case EventType::ButtonPressed:
-            action.type = Profile.getButtonAction();
+            action.type =
+                ProfileManagerInstance.getButtonAction(event.encoder);
+            action.value = 1;
+            break;
+
+        case EventType::ButtonLongPressed:
+            action.type =
+                ProfileManagerInstance.getLongButtonAction(event.encoder);
             action.value = 1;
             break;
 

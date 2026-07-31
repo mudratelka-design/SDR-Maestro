@@ -1,25 +1,21 @@
 //=============================================================================
 // File: OpenWebRXProfile.cpp
-// Commit: 3
+// Commit: 7
 //=============================================================================
 
 #include "OpenWebRXProfile.h"
 
-void OpenWebRXProfile::begin()
+void OpenWebRXProfile::load(
+    ActionType clockwise[],
+    ActionType counterClockwise[],
+    ActionType button[],
+    ActionType longButton[])
 {
-}
-
-ActionType OpenWebRXProfile::getClockwiseAction() const
-{
-    return ActionType::FrequencyUp;
-}
-
-ActionType OpenWebRXProfile::getCounterClockwiseAction() const
-{
-    return ActionType::FrequencyDown;
-}
-
-ActionType OpenWebRXProfile::getButtonAction() const
-{
-    return ActionType::ToggleMute;
+    for (uint8_t i = 0; i < ENCODER_COUNT; i++)
+    {
+        clockwise[i] = ActionType::FrequencyUp;
+        counterClockwise[i] = ActionType::FrequencyDown;
+        button[i] = ActionType::ToggleMute;
+        longButton[i] = ActionType::None;
+    }
 }

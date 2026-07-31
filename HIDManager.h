@@ -1,6 +1,6 @@
 //=============================================================================
 // File: HIDManager.h
-// Commit: 4 (4/4)
+// Commit: 7
 //=============================================================================
 
 #ifndef HID_MANAGER_H
@@ -26,5 +26,7 @@ private:
 
     bool connected = false;
 };
+
+extern HIDManager HIDManagerInstance;
 
 #endif

@@ -1,6 +1,6 @@
 //=============================================================================
 // File: Queue.cpp
-// Commit: 2
+// Commit: 7
 //=============================================================================
 
 #include "Queue.h"
@@ -23,12 +23,7 @@ bool Queue::push(const Event& event)
 
     buffer[head] = event;
 
-    head++;
-
-    if (head >= Capacity)
-    {
-        head = 0;
-    }
+    head = (head + 1) % Capacity;
 
     count++;
 
@@ -44,12 +39,7 @@ bool Queue::pop(Event& event)
 
     event = buffer[tail];
 
-    tail++;
-
-    if (tail >= Capacity)
-    {
-        tail = 0;
-    }
+    tail = (tail + 1) % Capacity;
 
     count--;
 
@@ -58,10 +48,10 @@ bool Queue::pop(Event& event)
 
 bool Queue::isEmpty() const
 {
-    return count == 0;
+    return (count == 0);
 }
 
 bool Queue::isFull() const
 {
-    return count >= Capacity;
+    return (count >= Capacity);
 }

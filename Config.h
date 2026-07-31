@@ -1,6 +1,6 @@
 //=============================================================================
 // File: Config.h
-// Commit: 6
+// Commit: 7
 //=============================================================================
 
 #ifndef CONFIG_H
@@ -22,23 +22,13 @@ struct EncoderPins
     uint8_t pinKey;
 };
 
-static constexpr EncoderPins ENCODERS[ENCODER_COUNT] =
+inline constexpr EncoderPins ENCODERS[ENCODER_COUNT] =
 {
-    {  4,  5, 14 },   // Encoder #1
-    {  6,  7, 15 },   // Encoder #2
-    {  8,  9, 16 },   // Encoder #3
-    { 10, 11, 17 },   // Encoder #4
-    { 12, 13, 18 }    // Encoder #5
+    {  4,  5, 14 },
+    {  6,  7, 15 },
+    {  8,  9, 16 },
+    { 10, 11, 17 },
+    { 12, 13, 18 }
 };
-
-/*
-    Encoder modules contain onboard pull-up resistors.
-
-    GPIO configuration:
-        pinMode(pin, INPUT);
-
-    If another encoder without pull-ups is used:
-        pinMode(pin, INPUT_PULLUP);
-*/
 
 #endif

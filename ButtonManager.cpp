@@ -1,13 +1,11 @@
 //=============================================================================
 // File: ButtonManager.cpp
-// Commit: 6
+// Commit: 7
 //=============================================================================
 
 #include "ButtonManager.h"
 
-#include "Config.h"
 #include "Queue.h"
-#include "Events.h"
 
 void ButtonManager::begin()
 {
@@ -19,7 +17,6 @@ void ButtonManager::begin()
 
         lastChangeTime[i] = millis();
         pressTime[i] = 0;
-
         longPressReported[i] = false;
     }
 }
@@ -30,7 +27,7 @@ void ButtonManager::update()
 
     for (uint8_t i = 0; i < ENCODER_COUNT; i++)
     {
-        bool state = digitalRead(ENCODERS[i].pinKey);
+        const bool state = digitalRead(ENCODERS[i].pinKey);
 
         if (state != lastState[i])
         {

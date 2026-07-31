@@ -1,9 +1,11 @@
 //=============================================================================
 // File: StorageManager.cpp
-// Commit: 3
+// Commit: 7
 //=============================================================================
 
 #include "StorageManager.h"
+
+StorageManager StorageManagerInstance;
 
 void StorageManager::begin()
 {

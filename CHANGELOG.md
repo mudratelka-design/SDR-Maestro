@@ -17,3 +17,29 @@
 
 - Long press events are generated but are not yet assigned to any action.
 - Encoder modules are configured for external onboard pull-up resistors.
+
+
+
+
+
+
+## Commit 7
+
+### Fixed
+
+- Unified include hierarchy.
+- Fixed global instance declarations.
+- Fixed build dependencies.
+- Fixed module initialization order.
+- Fixed configuration sharing.
+- Fixed queue visibility.
+- Fixed profile access.
+- Fixed HID attachment.
+
+### Ready
+
+- ESP32 Arduino Core 3.3.11
+- Five rotary encoders
+- Bluetooth HID
+- First hardware compilation
+- First hardware upload

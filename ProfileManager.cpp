@@ -1,33 +1,40 @@
 //=============================================================================
 // File: ProfileManager.cpp
-// Commit: 3
+// Commit: 7
 //=============================================================================
 
 #include "ProfileManager.h"
+
+#include "Config.h"
 #include "OpenWebRXProfile.h"
 
-static OpenWebRXProfile Profile;
+ProfileManager ProfileManagerInstance;
 
 void ProfileManager::begin()
 {
-    Profile.begin();
-
-    clockwiseAction = Profile.getClockwiseAction();
-    counterClockwiseAction = Profile.getCounterClockwiseAction();
-    buttonAction = Profile.getButtonAction();
+    OpenWebRXProfile::load(
+        clockwiseAction,
+        counterClockwiseAction,
+        buttonAction,
+        longButtonAction);
 }
 
-ActionType ProfileManager::getClockwiseAction() const
+ActionType ProfileManager::getClockwiseAction(uint8_t encoder) const
 {
-    return clockwiseAction;
+    return clockwiseAction[encoder];
 }
 
-ActionType ProfileManager::getCounterClockwiseAction() const
+ActionType ProfileManager::getCounterClockwiseAction(uint8_t encoder) const
 {
-    return counterClockwiseAction;
+    return counterClockwiseAction[encoder];
 }
 
-ActionType ProfileManager::getButtonAction() const
+ActionType ProfileManager::getButtonAction(uint8_t encoder) const
 {
-    return buttonAction;
+    return buttonAction[encoder];
+}
+
+ActionType ProfileManager::getLongButtonAction(uint8_t encoder) const
+{
+    return longButtonAction[encoder];
 }

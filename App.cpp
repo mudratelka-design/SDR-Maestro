@@ -1,50 +1,44 @@
 //=============================================================================
 // File: App.cpp
-// Commit: 6
+// Commit: 7
 //=============================================================================
 
 #include "App.h"
 
+#include "Version.h"
 #include "Logger.h"
+
+#include "Queue.h"
+
 #include "EncoderManager.h"
 #include "ButtonManager.h"
 #include "ActionManager.h"
 #include "HIDManager.h"
+
 #include "ProfileManager.h"
 #include "StorageManager.h"
-#include "Queue.h"
-
-extern Logger LoggerInstance;
-extern Queue EventQueue;
-
-static EncoderManager Encoder;
-static ButtonManager Button;
-static ActionManager Action;
-static HIDManager Hid;
-static ProfileManager Profile;
-static StorageManager Storage;
 
 void App::begin()
 {
     LoggerInstance.begin();
 
     LoggerInstance.info("========================================");
-    LoggerInstance.info("SDR Maestro");
-    LoggerInstance.info("Commit #6");
-    LoggerInstance.info("Hardware configuration loaded.");
+    LoggerInstance.info(PROJECT_NAME);
+    LoggerInstance.info(PROJECT_VERSION);
+    LoggerInstance.info(PROJECT_COMMIT);
     LoggerInstance.info("========================================");
 
-    Storage.begin();
-    Storage.load();
+    StorageManagerInstance.begin();
+    StorageManagerInstance.load();
 
-    Profile.begin();
+    ProfileManagerInstance.begin();
 
     EventQueue.begin();
 
-    Hid.begin();
+    HIDManagerInstance.begin();
 
-    Action.begin();
-    Action.attachHID(&Hid);
+    ActionManagerInstance.begin();
+    ActionManagerInstance.attachHID(&HIDManagerInstance);
 
     Encoder.begin();
     Button.begin();
@@ -52,10 +46,10 @@ void App::begin()
 
 void App::update()
 {
-    Hid.update();
+    HIDManagerInstance.update();
 
     Encoder.update();
     Button.update();
 
-    Action.update();
+    ActionManagerInstance.update();
 }

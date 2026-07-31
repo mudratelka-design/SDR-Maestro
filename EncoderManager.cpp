@@ -1,13 +1,11 @@
 //=============================================================================
 // File: EncoderManager.cpp
-// Commit: 6
+// Commit: 7
 //=============================================================================
 
 #include "EncoderManager.h"
 
-#include "Config.h"
 #include "Queue.h"
-#include "Events.h"
 
 void EncoderManager::begin()
 {
@@ -24,7 +22,7 @@ void EncoderManager::update()
 {
     for (uint8_t i = 0; i < ENCODER_COUNT; i++)
     {
-        int stateA = digitalRead(ENCODERS[i].pinA);
+        const int stateA = digitalRead(ENCODERS[i].pinA);
 
         if (stateA != lastStateA[i])
         {

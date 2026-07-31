@@ -1,12 +1,13 @@
 //=============================================================================
 // File: ButtonManager.h
-// Commit: 6
+// Commit: 7
 //=============================================================================
 
 #ifndef BUTTON_MANAGER_H
 #define BUTTON_MANAGER_H
 
 #include <Arduino.h>
+#include "Config.h"
 
 class ButtonManager
 {

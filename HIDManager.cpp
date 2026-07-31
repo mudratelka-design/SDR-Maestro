@@ -1,6 +1,6 @@
 //=============================================================================
 // File: HIDManager.cpp
-// Commit: 4 (4/4)
+// Commit: 7
 //=============================================================================
 
 #include "HIDManager.h"
@@ -9,8 +9,9 @@
 
 static BleKeyboard BleHID(
     "SDR Maestro",
-    "OpenAI",
     100);
+
+HIDManager HIDManagerInstance;
 
 void HIDManager::begin()
 {
@@ -41,11 +42,7 @@ void HIDManager::execute(const Action& action)
 
 void HIDManager::executeMouse(const Action& action)
 {
-    switch (action.type)
-    {
-        default:
-            break;
-    }
+    (void)action;
 }
 
 void HIDManager::executeKeyboard(const Action& action)

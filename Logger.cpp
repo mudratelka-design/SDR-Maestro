@@ -1,10 +1,12 @@
 //=============================================================================
 // File: Logger.cpp
-// Commit: 1
+// Commit: 7
 //=============================================================================
 
 #include "Logger.h"
 #include "Config.h"
+
+Logger LoggerInstance;
 
 void Logger::begin()
 {

@@ -1,21 +1,22 @@
 //=============================================================================
 // File: OpenWebRXProfile.h
-// Commit: 3
+// Commit: 7
 //=============================================================================
 
 #ifndef OPENWEBRX_PROFILE_H
 #define OPENWEBRX_PROFILE_H
 
+#include "Config.h"
 #include "Types.h"
 
 class OpenWebRXProfile
 {
 public:
-    void begin();
-
-    ActionType getClockwiseAction() const;
-    ActionType getCounterClockwiseAction() const;
-    ActionType getButtonAction() const;
+    static void load(
+        ActionType clockwise[],
+        ActionType counterClockwise[],
+        ActionType button[],
+        ActionType longButton[]);
 };
 
 #endif

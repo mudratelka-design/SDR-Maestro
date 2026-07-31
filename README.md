@@ -1,14 +1,14 @@
 # README.md
 
-# SDR-Maestro
+# SDR Maestro
 
-Bluetooth HID controller for SDR applications.
+Bluetooth HID controller for Software Defined Radio applications.
 
 ## Hardware
 
 - ESP32-S3 N16R8
-- Incremental rotary encoder
-- Encoder push button
+- Five rotary encoders
+- Five encoder push buttons
 
 ## Software
 
@@ -21,27 +21,19 @@ Bluetooth HID controller for SDR applications.
 - Config
 - Version
 - Logger
+- Queue
 - EncoderManager
 - ButtonManager
-- ActionManager
-- HIDManager
 - ProfileManager
 - StorageManager
+- ActionManager
+- HIDManager
 - OpenWebRX Profile
-- Queue
-- Events
-- Types
-
-## Git History
-
-- Commit 1 – Project structure
-- Commit 2 – Encoder, Button and Queue
-- Commit 3 – Profiles, Actions and Storage
-- Commit 4 – Bluetooth HID
-- Commit 5 – Documentation update
 
 ## Status
 
-Project skeleton complete.
+Commit 7
 
-Ready for application specific profiles and HID mappings.
+Build fixes completed.
+
+Project prepared for first successful compilation and hardware testing.
