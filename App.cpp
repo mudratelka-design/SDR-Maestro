@@ -1,6 +1,6 @@
 //=============================================================================
 // File: App.cpp
-// Commit: 3
+// Commit: 4
 //=============================================================================
 
 #include "App.h"
@@ -35,20 +35,21 @@ void App::begin()
 
     EventQueue.begin();
 
-    Encoder.begin();
-    Button.begin();
+    Hid.begin();
 
     Action.begin();
+    Action.attachHID(&Hid);
 
-    Hid.begin();
+    Encoder.begin();
+    Button.begin();
 }
 
 void App::update()
 {
+    Hid.update();
+
     Encoder.update();
     Button.update();
 
     Action.update();
-
-    Hid.update();
 }
