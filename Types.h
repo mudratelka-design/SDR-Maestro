@@ -1,12 +1,19 @@
 //=============================================================================
 // File: Types.h
-// Commit: 3
+// Commit: 6
 //=============================================================================
 
 #ifndef TYPES_H
 #define TYPES_H
 
 #include <Arduino.h>
+
+enum class ButtonState : uint8_t
+{
+    Released = 0,
+    Pressed,
+    LongPressed
+};
 
 enum class ActionType : uint8_t
 {
