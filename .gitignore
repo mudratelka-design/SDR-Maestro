@@ -1,0 +1,28 @@
+# Arduino IDE
+*.ino.eep
+*.ino.bin
+*.elf
+*.hex
+
+# Arduino CLI
+/build/
+
+# PlatformIO
+.pio/
+.vscode/
+
+# VS Code
+.vscode/*
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
