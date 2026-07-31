@@ -1,6 +1,6 @@
 //=============================================================================
 // File: Types.h
-// Commit: 1
+// Commit: 3
 //=============================================================================
 
 #ifndef TYPES_H
@@ -10,7 +10,27 @@
 
 enum class ActionType : uint8_t
 {
-    None = 0
+    None = 0,
+
+    FrequencyUp,
+    FrequencyDown,
+
+    VolumeUp,
+    VolumeDown,
+
+    GainUp,
+    GainDown,
+
+    ModeNext,
+    ModePrevious,
+
+    ToggleMute
+};
+
+struct Action
+{
+    ActionType type = ActionType::None;
+    int32_t value = 0;
 };
 
 #endif
