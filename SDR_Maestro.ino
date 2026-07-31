@@ -3,6 +3,23 @@
 // Commit: 1
 //=============================================================================
 
+#include "App.h"
+
+App Application;
+
+void setup()
+{
+    Application.begin();
+}
+
+void loop()
+{
+    Application.update();
+}//=============================================================================
+// File: SDR_Maestro.ino
+// Commit: 1
+//=============================================================================
+
 #include "Config.h"
 #include "Version.h"
 #include "Logger.h"
