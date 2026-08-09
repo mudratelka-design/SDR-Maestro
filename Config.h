@@ -1,7 +1,7 @@
 //=============================================================================
 // File: Config.h
-// Commit: 9
-// Version: 0.2.0
+// Commit: 11
+// Version: 0.3.0
 //=============================================================================
 
 #ifndef CONFIG_H
@@ -58,6 +58,41 @@ constexpr EncoderPins ENCODERS[ENCODER_COUNT] =
     { 10, 11, 17 },   // Encoder #4
     { 12, 13, 18 }    // Encoder #5
 };
+
+//=============================================================================
+// Profiles
+//=============================================================================
+
+// One selectable profile per encoder (so a boot-time short-press on
+// encoder N can select profile N - see BOOT_PROFILE_SELECT_WINDOW_MS
+// below). Profile 0 is "OpenWebRX", defined in OpenWebRXProfile.cpp;
+// profiles 1..N-1 start out empty (every button = no action) until you
+// define them via the web config page.
+constexpr uint8_t PROFILE_COUNT = ENCODER_COUNT;
+
+// How long after boot the device watches for a short-press on any encoder
+// to select that encoder's profile for this session. No press within this
+// window -> profile 0 (OpenWebRX) loads, as before this feature existed.
+constexpr uint32_t BOOT_PROFILE_SELECT_WINDOW_MS = 5000;
+
+//=============================================================================
+// WiFi Config Portal
+//=============================================================================
+
+// A small access point + web page ("http://192.168.4.1/" once connected)
+// for defining what each encoder's 4 events send, per profile, and for
+// switching the active profile - all without re-flashing the sketch.
+//
+// The AP name intentionally matches the BLE device name.
+constexpr char AP_SSID[]     = "SDR Maestro";
+constexpr char AP_PASSWORD[] = "aaaaaaaa"; // 8 chars = WPA2 minimum length
+
+// The AP shuts itself off this long after boot, PROVIDED nobody is
+// connected to it at that point - if a browser is still connected when the
+// timer elapses, the AP stays up until that client disconnects, then shuts
+// down. This limits how long the device is a joinable WiFi network without
+// requiring you to remember to turn it off yourself.
+constexpr uint32_t AP_TIMEOUT_MS = 5UL * 60UL * 1000UL; // 5 minutes
 
 //=============================================================================
 // Hardware Notes
