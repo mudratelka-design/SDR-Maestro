@@ -1,6 +1,7 @@
 //=============================================================================
 // File: App.cpp
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
 //=============================================================================
 
 #include "App.h"
@@ -10,13 +11,11 @@
 
 #include "Queue.h"
 
-#include "EncoderManager.h"
-#include "ButtonManager.h"
-#include "ActionManager.h"
-#include "HIDManager.h"
-
 #include "ProfileManager.h"
 #include "StorageManager.h"
+
+#include "HIDManager.h"
+#include "ActionManager.h"
 
 void App::begin()
 {
@@ -28,28 +27,30 @@ void App::begin()
     LoggerInstance.info(PROJECT_COMMIT);
     LoggerInstance.info("========================================");
 
+    EventQueue.begin();
+
     StorageManagerInstance.begin();
     StorageManagerInstance.load();
 
     ProfileManagerInstance.begin();
-
-    EventQueue.begin();
 
     HIDManagerInstance.begin();
 
     ActionManagerInstance.begin();
     ActionManagerInstance.attachHID(&HIDManagerInstance);
 
-    Encoder.begin();
-    Button.begin();
+    encoderManager.begin();
+    buttonManager.begin();
+
+    LoggerInstance.info("Initialization complete. Advertising over BLE as \"SDR Maestro\".");
 }
 
 void App::update()
 {
     HIDManagerInstance.update();
 
-    Encoder.update();
-    Button.update();
+    encoderManager.update();
+    buttonManager.update();
 
     ActionManagerInstance.update();
 }

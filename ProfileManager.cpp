@@ -1,11 +1,11 @@
 //=============================================================================
 // File: ProfileManager.cpp
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
 //=============================================================================
 
 #include "ProfileManager.h"
 
-#include "Config.h"
 #include "OpenWebRXProfile.h"
 
 ProfileManager ProfileManagerInstance;
@@ -15,26 +15,34 @@ void ProfileManager::begin()
     OpenWebRXProfile::load(
         clockwiseAction,
         counterClockwiseAction,
-        buttonAction,
-        longButtonAction);
+        shortPressAction,
+        longPressAction);
 }
 
-ActionType ProfileManager::getClockwiseAction(uint8_t encoder) const
+KeyAction ProfileManager::getAction(uint8_t encoder, EventType eventType) const
 {
-    return clockwiseAction[encoder];
-}
+    if (encoder >= ENCODER_COUNT)
+    {
+        return KeyAction{};
+    }
 
-ActionType ProfileManager::getCounterClockwiseAction(uint8_t encoder) const
-{
-    return counterClockwiseAction[encoder];
-}
+    switch (eventType)
+    {
+        case EventType::EncoderClockwise:
+            return clockwiseAction[encoder];
 
-ActionType ProfileManager::getButtonAction(uint8_t encoder) const
-{
-    return buttonAction[encoder];
-}
+        case EventType::EncoderCounterClockwise:
+            return counterClockwiseAction[encoder];
 
-ActionType ProfileManager::getLongButtonAction(uint8_t encoder) const
-{
-    return longButtonAction[encoder];
+        case EventType::ButtonPressed:
+            return shortPressAction[encoder];
+
+        case EventType::ButtonLongPressed:
+            return longPressAction[encoder];
+
+        case EventType::ButtonReleased:
+        case EventType::None:
+        default:
+            return KeyAction{};
+    }
 }

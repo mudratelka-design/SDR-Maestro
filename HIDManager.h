@@ -1,13 +1,16 @@
 //=============================================================================
 // File: HIDManager.h
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
 //=============================================================================
 
 #ifndef HID_MANAGER_H
 #define HID_MANAGER_H
 
 #include <Arduino.h>
+
 #include "Types.h"
+#include "BleHidKeyboard.h"
 
 class HIDManager
 {
@@ -17,14 +20,10 @@ public:
 
     bool isConnected() const;
 
-    void execute(const Action& action);
+    void execute(const KeyAction& action);
 
 private:
-    void executeMouse(const Action& action);
-    void executeKeyboard(const Action& action);
-    void executeConsumerKeys(const Action& action);
-
-    bool connected = false;
+    BleHidKeyboard hid;
 };
 
 extern HIDManager HIDManagerInstance;

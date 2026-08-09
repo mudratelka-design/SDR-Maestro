@@ -1,6 +1,7 @@
 //=============================================================================
 // File: ActionManager.cpp
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
 //=============================================================================
 
 #include "ActionManager.h"
@@ -26,9 +27,9 @@ void ActionManager::update()
 
     while (EventQueue.pop(event))
     {
-        Action action = mapEventToAction(event);
+        const KeyAction action = ProfileManagerInstance.getAction(event.encoder, event.type);
 
-        if (action.type == ActionType::None)
+        if (action.type == KeyType::None)
         {
             continue;
         }
@@ -38,43 +39,4 @@ void ActionManager::update()
             hidManager->execute(action);
         }
     }
-}
-
-Action ActionManager::mapEventToAction(const Event& event)
-{
-    Action action;
-
-    switch (event.type)
-    {
-        case EventType::EncoderClockwise:
-            action.type =
-                ProfileManagerInstance.getClockwiseAction(event.encoder);
-            action.value = event.value;
-            break;
-
-        case EventType::EncoderCounterClockwise:
-            action.type =
-                ProfileManagerInstance.getCounterClockwiseAction(event.encoder);
-            action.value = event.value;
-            break;
-
-        case EventType::ButtonPressed:
-            action.type =
-                ProfileManagerInstance.getButtonAction(event.encoder);
-            action.value = 1;
-            break;
-
-        case EventType::ButtonLongPressed:
-            action.type =
-                ProfileManagerInstance.getLongButtonAction(event.encoder);
-            action.value = 1;
-            break;
-
-        default:
-            action.type = ActionType::None;
-            action.value = 0;
-            break;
-    }
-
-    return action;
 }

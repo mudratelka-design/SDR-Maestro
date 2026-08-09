@@ -1,6 +1,7 @@
 //=============================================================================
 // File: App.h
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
 //=============================================================================
 
 #ifndef APP_H
@@ -16,8 +17,8 @@ public:
     void update();
 
 private:
-    EncoderManager Encoder;
-    ButtonManager Button;
+    EncoderManager encoderManager;
+    ButtonManager buttonManager;
 };
 
 #endif

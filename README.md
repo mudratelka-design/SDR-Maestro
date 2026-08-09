@@ -37,3 +37,7 @@ Commit 7
 Build fixes completed.
 
 Project prepared for first successful compilation and hardware testing.
+
+
+Commit 9
+New begin:)

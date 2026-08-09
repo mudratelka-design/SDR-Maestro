@@ -1,86 +1,42 @@
 //=============================================================================
 // File: HIDManager.cpp
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
 //=============================================================================
 
 #include "HIDManager.h"
-
-#include <BleKeyboard.h>
-
-static BleKeyboard BleHID(
-    "SDR Maestro",
-    "Maverick + OpenAI",
-    100);
 
 HIDManager HIDManagerInstance;
 
 void HIDManager::begin()
 {
-    BleHID.begin();
+    hid.begin("SDR Maestro", "mudratelka-design", 100);
 }
 
 void HIDManager::update()
 {
-    connected = BleHID.isConnected();
+    // Connection state is updated directly by BLE server callbacks inside
+    // BleHidKeyboard; nothing to poll here. Kept for interface symmetry.
 }
 
 bool HIDManager::isConnected() const
 {
-    return connected;
+    return hid.isConnected();
 }
 
-void HIDManager::execute(const Action& action)
-{
-    if (!connected)
-    {
-        return;
-    }
-
-    executeMouse(action);
-    executeKeyboard(action);
-    executeConsumerKeys(action);
-}
-
-void HIDManager::executeMouse(const Action& action)
-{
-    (void)action;
-}
-
-void HIDManager::executeKeyboard(const Action& action)
+void HIDManager::execute(const KeyAction& action)
 {
     switch (action.type)
     {
-        case ActionType::ModeNext:
-            BleHID.write(KEY_TAB);
+        case KeyType::Key:
+            hid.sendKey(action.key, action.modifier);
             break;
 
-        case ActionType::ModePrevious:
-            BleHID.press(KEY_LEFT_SHIFT);
-            BleHID.write(KEY_TAB);
-            BleHID.release(KEY_LEFT_SHIFT);
+        case KeyType::MediaKey:
+            hid.sendMediaKey(action.key);
             break;
 
-        default:
-            break;
-    }
-}
-
-void HIDManager::executeConsumerKeys(const Action& action)
-{
-    switch (action.type)
-    {
-        case ActionType::VolumeUp:
-            BleHID.write(KEY_MEDIA_VOLUME_UP);
-            break;
-
-        case ActionType::VolumeDown:
-            BleHID.write(KEY_MEDIA_VOLUME_DOWN);
-            break;
-
-        case ActionType::ToggleMute:
-            BleHID.write(KEY_MEDIA_MUTE);
-            break;
-
+        case KeyType::None:
         default:
             break;
     }

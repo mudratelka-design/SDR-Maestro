@@ -1,6 +1,7 @@
 //=============================================================================
 // File: ActionManager.h
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
 //=============================================================================
 
 #ifndef ACTION_MANAGER_H
@@ -20,8 +21,6 @@ public:
     void attachHID(HIDManager* hid);
 
 private:
-    Action mapEventToAction(const Event& event);
-
     HIDManager* hidManager = nullptr;
 };
 

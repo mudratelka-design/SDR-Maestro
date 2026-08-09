@@ -1,19 +1,28 @@
 //=============================================================================
 // File: ButtonManager.cpp
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
+//=============================================================================
+//
+// A short press is only reported on release, and only if the long-press
+// threshold was never reached while the button was held. The original
+// version fired the "pressed" event immediately on the falling edge and
+// then ALSO fired "long pressed" later if held - so every long press
+// double-fired both the short-press action and the long-press action.
 //=============================================================================
 
 #include "ButtonManager.h"
 
+#include "Events.h"
 #include "Queue.h"
 
 void ButtonManager::begin()
 {
     for (uint8_t i = 0; i < ENCODER_COUNT; i++)
     {
-        pinMode(ENCODERS[i].pinKey, INPUT);
+        pinMode(ENCODERS[i].pinButton, INPUT);
 
-        lastState[i] = digitalRead(ENCODERS[i].pinKey);
+        lastState[i] = digitalRead(ENCODERS[i].pinButton);
 
         lastChangeTime[i] = millis();
         pressTime[i] = 0;
@@ -27,31 +36,33 @@ void ButtonManager::update()
 
     for (uint8_t i = 0; i < ENCODER_COUNT; i++)
     {
-        const bool state = digitalRead(ENCODERS[i].pinKey);
+        const bool state = digitalRead(ENCODERS[i].pinButton);
 
-        if (state != lastState[i])
+        if (state != lastState[i] && (now - lastChangeTime[i]) >= BUTTON_DEBOUNCE_MS)
         {
-            if ((now - lastChangeTime[i]) >= BUTTON_DEBOUNCE_MS)
+            lastState[i] = state;
+            lastChangeTime[i] = now;
+
+            if (!state)
             {
-                lastChangeTime[i] = now;
-                lastState[i] = state;
-
-                Event event;
-                event.encoder = i;
-
-                if (!state)
+                // Falling edge: button just pressed. Don't fire an action
+                // yet - wait to see whether this turns into a short press
+                // (released early) or a long press (still held below).
+                pressTime[i] = now;
+                longPressReported[i] = false;
+            }
+            else
+            {
+                // Rising edge: button released. Only counts as a short
+                // press if the long-press threshold was never reached.
+                if (!longPressReported[i])
                 {
-                    pressTime[i] = now;
-                    longPressReported[i] = false;
-
+                    Event event;
+                    event.encoder = i;
                     event.type = EventType::ButtonPressed;
-                }
-                else
-                {
-                    event.type = EventType::ButtonReleased;
-                }
 
-                EventQueue.push(event);
+                    EventQueue.push(event);
+                }
             }
         }
 
@@ -62,7 +73,6 @@ void ButtonManager::update()
             longPressReported[i] = true;
 
             Event event;
-
             event.encoder = i;
             event.type = EventType::ButtonLongPressed;
 

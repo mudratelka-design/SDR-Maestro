@@ -1,12 +1,14 @@
 //=============================================================================
 // File: ButtonManager.h
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
 //=============================================================================
 
 #ifndef BUTTON_MANAGER_H
 #define BUTTON_MANAGER_H
 
 #include <Arduino.h>
+
 #include "Config.h"
 
 class ButtonManager

@@ -1,10 +1,11 @@
 //=============================================================================
 // File: Queue.h
-// Commit: 7
+// Commit: 9
+// Version: 0.2.0
 //=============================================================================
 
-#ifndef QUEUE_H
-#define QUEUE_H
+#ifndef SDR_MAESTRO_QUEUE_H
+#define SDR_MAESTRO_QUEUE_H
 
 #include <Arduino.h>
 #include "Events.h"
@@ -21,13 +22,14 @@ public:
 
     bool isEmpty() const;
     bool isFull() const;
+    uint8_t size() const;
 
 private:
     Event buffer[Capacity];
 
-    volatile uint8_t head;
-    volatile uint8_t tail;
-    volatile uint8_t count;
+    uint8_t head;
+    uint8_t tail;
+    uint8_t count;
 };
 
 extern Queue EventQueue;
