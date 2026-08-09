@@ -1,16 +1,24 @@
 //=============================================================================
 // File: Version.h
-// Commit: 9
-// Version: 0.2.0
+// Commit: 10
+// Version: 0.2.1
 //=============================================================================
 
 #ifndef VERSION_H
 #define VERSION_H
 
 #define PROJECT_NAME        "SDR Maestro"
-#define PROJECT_VERSION     "0.2.0"
-#define PROJECT_COMMIT      "Commit 9"
+#define PROJECT_VERSION     "0.2.1"
+#define PROJECT_COMMIT      "Commit 10"
 
+// Commit 10 changes:
+//  - Fixed a boot-loop crash (Guru Meditation Error: LoadProhibited) in
+//    BleHidKeyboard::begin(). The single-argument hid->manufacturer(name)
+//    setter dereferences a BLEHIDDevice member that the ESP32 core's own
+//    BLEHIDDevice constructor never initializes; only the no-argument
+//    hid->manufacturer() getter actually creates that characteristic.
+//    Fixed by calling the getter first: hid->manufacturer()->setValue(name).
+//
 // Commit 9 changes vs. the "fixed" skeleton this was based on:
 //  - Removed the dependency on the external "ESP32 BLE Keyboard" library
 //    (unmaintained, doesn't compile on ESP32 core 3.x). BLE HID keyboard +

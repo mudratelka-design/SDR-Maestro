@@ -95,7 +95,10 @@ void BleHidKeyboard::begin(const char* deviceName, const char* manufacturer, uin
 
     BLEHIDDevice* hid = new BLEHIDDevice(server);
 
-    hid->manufacturer(manufacturer);
+    hid->manufacturer()->setValue(manufacturer);  // Fix: must create the characteristic via the
+                                                   // no-arg getter first; the single-arg setter
+                                                   // dereferences an uninitialized pointer and
+                                                   // causes a LoadProhibited boot crash.
     hid->pnp(0x02, 0x303A, 0x0002, 0x0100); // 0x303A = Espressif's USB VID
     hid->hidInfo(0x00, 0x01);
 

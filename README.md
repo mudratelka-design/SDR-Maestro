@@ -41,3 +41,6 @@ Project prepared for first successful compilation and hardware testing.
 
 Commit 9
 New begin:)
+
+Commit 10
+Fixed a boot-loop crash.

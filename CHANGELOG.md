@@ -66,3 +66,13 @@
     only watching pin A.
   - Logger no longer blocks forever in setup() waiting for a USB serial
     monitor that may never attach.
+
+	
+##Commit 10
+
+  - Fixed a boot-loop crash (Guru Meditation Error: LoadProhibited) in
+    BleHidKeyboard::begin(). The single-argument hid->manufacturer(name)
+    setter dereferences a BLEHIDDevice member that the ESP32 core's own
+    BLEHIDDevice constructor never initializes; only the no-argument
+    hid->manufacturer() getter actually creates that characteristic.
+    Fixed by calling the getter first: hid->manufacturer()->setValue(name).
